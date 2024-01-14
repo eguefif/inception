@@ -1,0 +1,37 @@
+services:
+  nginx:
+    build: ./requirements/nginx/
+    restart: always
+    ports:
+      - "443:443"
+      - "80:80"
+    networks:
+      - inception-network
+
+  mariadb:
+    build: ./requirements/mariadb/
+    restart: always
+    ports:
+      - "3306:3306"
+    env_file:
+      ./.env
+    volumes:
+      - inception:/var/lib/mysql
+    networks:
+      - inception-network
+
+  wordpress:
+    build: ./requirements/wordpress/
+    depends_on:
+      - mariadb
+      - nginx
+    restart: unless-stopped
+    networks:
+      - inception-network
+
+volumes:
+  inception:
+
+networks:
+  inception-network:
+    driver: bridge
