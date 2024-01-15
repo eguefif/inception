@@ -6,35 +6,48 @@ services:
       - "443:443"
       - "80:80"
     networks:
-      - inception-network
+      - inception
 
   mariadb:
     build: ./requirements/mariadb
     env_file:
       ./.env
+    ports:
+      - "3306:3306"
     volumes:
-      - inception-db:/var/lib/mysql
+      - mariadb:/var/lib/mysql
+    networks:
+      - inception
 
-        #  wordpress:
-        #    build: ./requirements/wordpress
-        #    depends_on:
-        #      - mariadb
-        #      - nginx
-        #    restart: unless-stopped
-        #    networks:
-        #      - inception-network
-        #      volumes:
-        #        - inception-wordpress:/var/www/
+
+
+  wordpress:
+    build: ./requirements/wordpress
+    depends_on:
+      - mariadb
+      - nginx
+    restart: unless-stopped
+    networks:
+      - inception
+    volumes:
+      - wordpress:/var/www/
 
 volumes:
-  inception-db:
-      driver: local
-      driver_opts:
-        type: none
-        o: bind
-        device: "/home/eguefif/data/mariadb"
-    #inception-wordpress:
+  mariadb:
+    name: mariadb
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: "/home/eguefif/data/mariadb"
+  wordpress:
+    name: wordpress
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: "/home/eguefif/data/wordpress"
 
 networks:
-  inception-network:
-    driver: bridge
+  inception:
+    name: inception

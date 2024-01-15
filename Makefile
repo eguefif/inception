@@ -19,7 +19,8 @@ logs:
 
 clean:
 	@cd srcs; \
-	docker compose down
+	docker compose down -v
+	docker volume prune --all --force
 
 re:
 	@cd srcs; \
