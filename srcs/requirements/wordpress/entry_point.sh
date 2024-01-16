@@ -1,8 +1,15 @@
 #!/bin/bash
 
-#service php7.3-fpm start
-sed -i "s/127\.0\.0\.1/0\.0\.0\.0/g" /etc/php/7.3/fpm/pool.d/www.conf
+if [ ! -d "/var/www/wp" ]; then
+	mkdir /var/www/wp
+fi
 
-kill $(cat /var/run/php7.3-fpm.pid)
+if [ ! -d "/var/run/php-fpm" ]; then
+	mkdir /var/run/php
+fi
+
+
+#kill $(cat /var/run/php7.3-fpm.pid)
 #tail -f /dev/null
+#service php7.3-fpm start
 php-fpm7.3
