@@ -2,48 +2,49 @@ version: '3.1'
 services:
   nginx:
     build: ./requirements/nginx/
+    depends_on:
+      - wordpress
     ports:
       - "443:443"
-      - "80:80"
     networks:
       - inception
+    volumes:
+      - wordpress-vol:/var/www/wp
 
   mariadb:
     build: ./requirements/mariadb
+    container_name: mariadb
     env_file:
       ./.env
     ports:
       - "3306:3306"
     volumes:
-      - mariadb:/var/lib/mysql
+      - mariadb-db:/var/lib/mysql
     networks:
       - inception
 
   wordpress:
     build: ./requirements/wordpress/
-    restart: always
-    ports:
-      - "9000:9000"
+    container_name: wordpress
     env_file:
       ./.env
     depends_on:
       - mariadb
-      - nginx
     networks:
       - inception
     volumes:
-      - wordpress:/var/www/
+      - wordpress-vol:/var/www/wp
 
 volumes:
-  mariadb:
-    name: mariadb
+  mariadb-db:
+    name: maria-db
     driver: local
     driver_opts:
       type: none
       o: bind
       device: "/home/eguefif/data/mariadb"
-  wordpress:
-    name: wordpress
+  wordpress-vol:
+    name: wordpress-vol
     driver: local
     driver_opts:
       type: none

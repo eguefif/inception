@@ -3,7 +3,6 @@ NAME = inception
 all: create_folder $(NAME)
 
 $(NAME):
-	docker volume create inception-db
 	@cd srcs; \
 	docker compose up -d
 
@@ -18,12 +17,16 @@ logs:
 	docker ps -aqf "name=mariadb" | xargs docker logs
 
 clean:
+	@cd srcs; \
 	docker image prune
+	@cd srcs; \
 	docker volume prune --all --force
 	@cd srcs; \
 	docker compose down -v
+fclean:
+	docker system prune -a
 
-re:
+re: 
 	@cd srcs; \
 		docker compose down; \
 		docker compose up --build -d
