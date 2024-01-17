@@ -18,9 +18,10 @@ logs:
 	docker ps -aqf "name=mariadb" | xargs docker logs
 
 clean:
+	docker image prune
+	docker volume prune --all --force
 	@cd srcs; \
 	docker compose down -v
-	docker volume prune --all --force
 
 re:
 	@cd srcs; \
