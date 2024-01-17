@@ -1,7 +1,7 @@
 FROM debian:buster
 
-RUN apt update; \
-	apt install -y php php-cli php7.3-fpm wordpress
+RUN apt-get update && apt-get update; \
+	apt-get install -y php php7.3-fpm mariadb-client php-mysql
 
 COPY ./www.conf /etc/php/7.3/fpm/pool.d/
 COPY ./entry_point.sh /usr/local/bin
