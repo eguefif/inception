@@ -20,16 +20,20 @@
 
 // ** Database settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define( 'DB_NAME', getenv("MYSQL_DATABASE"));
+//define( 'DB_NAME', getenv('WP_DB_NAME'));
+define( 'DB_NAME', 'inceptiondb');
 
 /** Database username */
-define( 'DB_USER', getenv("MYSQL_USER"));
+//define( 'DB_USER', getenv('WP_DB_USER'));
+define( 'DB_USER', 'inception');
 
 /** Database password */
-define( 'DB_PASSWORD', getenv("MYSQL_PASS"));
+//define( 'DB_PASSWORD', getenv('WP_DB_PASSWORD'));
+define( 'DB_PASSWORD', 'salutMaria');
 
 /** Database hostname */
-define( 'DB_HOST', getenv("WORDPRESS_DB_HOST"));
+//define( 'DB_HOST', getenv('WP_DB_HOST'));
+define( 'DB_HOST', 'mariadb');
 
 /** Database charset to use in creating database tables. */
 define( 'DB_CHARSET', 'utf8' );

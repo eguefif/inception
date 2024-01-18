@@ -3,7 +3,7 @@ FROM debian:buster
 RUN apt update;\
 	apt install -y nginx
 
-ADD ./default.conf /etc/nginx/conf.d
+ADD ./conf/default.conf /etc/nginx/conf.d
 
 EXPOSE 443
 
