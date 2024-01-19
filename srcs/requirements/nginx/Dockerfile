@@ -4,8 +4,14 @@ RUN apt update;\
 	apt install -y nginx openssl
 
 ADD ./conf/default.conf /etc/nginx/conf.d
-COPY ./conf/openssl.cnf /etc/ssl/openssl.cnf
+COPY ./tools/entry-point.sh /
+RUN chmod +x /entry-point.sh
 
 EXPOSE 443
 
-CMD ["nginx", "-g", "daemon off;"]
+WORKDIR /etc/ssl/certs/
+
+#ENTRYPOINT ["/entry-point.sh"]
+
+#CMD ["nginx", "-g", "daemon off;"]
+CMD ["tail", "-f", "/dev/null"]

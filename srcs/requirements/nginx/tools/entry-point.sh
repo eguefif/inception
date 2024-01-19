@@ -1,8 +1,12 @@
-if [ ! -f "/etc/ssl/certs/cert.cert" ]; then
-	openssl genrsa -des3 -out rootCA.key 2048
-	openssl req -x509 -new -nodes -key rootCA.key -sha256 -says 730 -out rootCert.pem
-	openssl genrsa -out cert.key 2048
-	openssl req -new -key cert.key -out cert.csr
-	openss x509 -req -in cert.csr -CA rootCert.pem -CAkey rootCert.key -CAcreateserial -out cert.crt -days 730 -sha 256 -extfile openssl.cnf
-	openssl verify -CAfile rootCert.pem -verify_hostname eguefif.42.fr cert.crt
+#!/bin/bash
+if [ ! -d "/etc/ssl/certs" ]; then
+	mkdir /etc/ssl/certs
+fi
+cd /etc/ssl/certs
+if [ ! -f "/etc/ssl/certs/eguefif_42_fr.cert" ]; then
+	# Create the crt and the private key. crt is a request file to create certificate for a specific website
+	openssl req -new -newkey rsa:2048 -nodes -out eguefif_42_fr.csr -keyout eguefif_42_fr.key -subj "/C=CA/ST=Quebec/L=Quebec/O=42 Quebec/OU=Student/CN=eguefif.42.fr"
+	# create the crt from the last two files
+	openssl x509 -req -days 365 -in eguefif_42_fr.csr -signkey eguefif_42_fr.key -out eguefif_42_fr.crt
+
 fi
