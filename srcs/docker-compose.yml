@@ -1,13 +1,17 @@
-version: '3.1'
+version: '3'
 services:
   nginx:
+    container_name: nginx
     build: ./requirements/nginx/
+    env_file:
+      - .env
     depends_on:
       - wordpress
     ports:
       - "443:443"
     networks:
       - inception
+    restart: on-failure
     volumes:
       - wordpress-vol:/var/www/wp
 
@@ -22,10 +26,13 @@ services:
       - mariadb-db:/var/lib/mysql
     networks:
       - inception
+    restart: unless-stopped
 
   wordpress:
     build: ./requirements/wordpress/
     container_name: wordpress
+    ports:
+      - "9000:9000"
     env_file:
       ./.env
     depends_on:
@@ -34,6 +41,7 @@ services:
       - inception
     volumes:
       - wordpress-vol:/var/www/wp
+    restart: unless-stopped
 
 volumes:
   mariadb-db:

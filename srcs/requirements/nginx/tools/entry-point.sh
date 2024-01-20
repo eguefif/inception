@@ -8,5 +8,6 @@ if [ ! -f "/etc/ssl/certs/eguefif_42_fr.cert" ]; then
 	openssl req -new -newkey rsa:2048 -nodes -out eguefif_42_fr.csr -keyout eguefif_42_fr.key -subj "/C=CA/ST=Quebec/L=Quebec/O=42 Quebec/OU=Student/CN=eguefif.42.fr"
 	# create the crt from the last two files
 	openssl x509 -req -days 365 -in eguefif_42_fr.csr -signkey eguefif_42_fr.key -out eguefif_42_fr.crt
-
 fi
+
+nginx -g "daemon off;"
