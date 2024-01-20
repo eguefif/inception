@@ -7,7 +7,7 @@ do
 	if mariadb -h $WP_DB_HOST -u $WP_DB_USER -p$WP_DB_PASSWORD <<< "use $WP_DB_NAME"; then
 		break
 	fi
-	sleep 2
+	sleep 1
 done
 
 if [ $i = 30 ]; then
@@ -18,7 +18,6 @@ if [ ! -f "/var/www/wp/index.php" ]; then
 	tar -xvf wordpress-6.4.2-en_CA.tar.gz
 	cp -r wordpress/* /var/www/wp
 	rm -rf wordpress wordpress-6.4.2-en_CA.tar.gz
-	#mv /wp-config.php /var/www/wp/wp-config.php
 	cd /var/www/wp
 	wp config create --allow-root \
 		--dbname=$WP_DB_NAME \

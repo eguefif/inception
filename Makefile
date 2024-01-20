@@ -18,20 +18,20 @@ logs:
 
 clean:
 	@cd srcs; \
+	docker compose down -v
+	@cd srcs; \
 	docker image prune
 	@cd srcs; \
 	docker volume prune --all --force
-	@cd srcs; \
-	docker compose down -v
+
 fclean:
 	@cd srcs; \
 	docker compose down -v
 	docker system prune -a
 	make re
 
-re: 
+re: clean
 	@cd srcs; \
-		docker compose down; \
 		docker compose up --build -d
 
 .phony: all inception clean fclean re create_folder

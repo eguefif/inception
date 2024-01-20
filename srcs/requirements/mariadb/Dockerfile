@@ -15,5 +15,3 @@ RUN chown -R mysql:mysql /run/mysqld
 EXPOSE 3306
 
 CMD ["entry_point.sh"]
-#CMD ["tail", "-f", "/dev/null"]
-#CMD ["mysqld"]

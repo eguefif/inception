@@ -14,5 +14,5 @@ if [ ! -f "/var/lib/mysql/inception.sql" ]; then
 	cp inception.sql /var/lib/mysql/
 	kill $(cat /var/run/mysqld/mysqld.pid)
 fi
-#tail -f /dev/null
+
 mysqld
