@@ -3,6 +3,7 @@ NAME = inception
 all: create_folder $(NAME)
 
 $(NAME): create_folder
+	cp ../inception-backup/srcs/.env ./srcs
 	@cd srcs; \
 	docker compose up -d
 
