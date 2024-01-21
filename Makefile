@@ -2,7 +2,7 @@ NAME = inception
 
 all: create_folder $(NAME)
 
-$(NAME):
+$(NAME): create_folder
 	@cd srcs; \
 	docker compose up -d
 
@@ -12,9 +12,6 @@ create_folder:
 		mkdir ../data/mariadb;\
 		mkdir ../data/wordpress;\
 	fi
-
-logs:
-	docker ps -aqf "name=mariadb" | xargs docker logs
 
 clean:
 	@cd srcs; \
